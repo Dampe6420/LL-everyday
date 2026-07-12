@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "frase": "Lo importante no es saber, sino tener el teléfono del que sabe.",
+    "obra": "El sendero de Warren Sánchez",
+    "show": "De tropezón en tropezón (1987)",
+    "personaje": "Daniel Rabinovich"
+  },
+  {
+    "id": 2,
+    "frase": "Tiene una calavera y cruzadas dos tibias... ¿Tibias? Confirmado, la han puesto para que se enfríe.",
+    "obra": "Las Majas del Bergantín",
+    "show": "Mastropiero que nunca (1977)",
+    "personaje": "Daniel Rabinovich"
+  },
+  {
+    "id": 3,
+    "frase": "Errare humanum est... pero echarle la culpa a otro es más humano todavía.",
+    "obra": "El sendero de Warren Sánchez",
+    "show": "De tropezón en tropezón (1987)",
+    "personaje": "Daniel Rabinovich"
+  },
+  {
+    "id": 4,
+    "frase": "La iniciativa privada consiste en que cada uno se apropie de lo que pueda.",
+    "obra": "La iniciativa privada",
+    "show": "Por humor al arte (1983)",
+    "personaje": "Marcos Mundstock"
+  },
+  {
+    "id": 5,
+    "frase": "El amor eterno dura aproximadamente tres meses.",
+    "obra": "Dilema de amor",
+    "show": "El Grosso Concerto (2001)",
+    "personaje": "Daniel Rabinovich"
+  },
+  {
+    "id": 6,
+    "frase": "La verdad no es lo que importa, sino lo que la gente cree que es la verdad.",
+    "obra": "El sendero de Warren Sánchez",
+    "show": "De tropezón en tropezón (1987)",
+    "personaje": "Marcos Mundstock"
+  },
+  {
+    "id": 7,
+    "frase": "El que nace para pito nunca llega a corneta.",
+    "obra": "La tarta y el té",
+    "show": "Bromato de armonio (1996)",
+    "personaje": "Daniel Rabinovich"
+  },
+  {
+    "id": 8,
+    "frase": "Solo los tontos tienen certezas; los sabios tienen dudas. ¿Está seguro de eso? Totalmente.",
+    "obra": "Diálogos de Mastropiero",
+    "show": "Recital sinfónico (1986)",
+    "personaje": "Marcos Mundstock"
+  },
+  {
+    "id": 9,
+    "frase": "Todo tiempo pasado fue anterior.",
+    "obra": "La tarta y el té",
+    "show": "Bromato de armonio (1996)",
+    "personaje": "Daniel Rabinovich"
+  },
+  {
+    "id": 10,
+    "frase": "No te preocupes por el dinero, que para eso está la salud... ¡Para poder trabajar y conseguirlo!",
+    "obra": "Don Rodrigo Díaz de Carreras",
+    "show": "Mastropiero que nunca (1977)",
+    "personaje": "Daniel Rabinovich"
+  },
+  {
+    "id": 11,
+    "frase": "El dinero no hace la felicidad, la compra hecha.",
+    "obra": "Frases célebres de Mastropiero",
+    "show": "Humor dulce hogar (1986)",
+    "personaje": "Daniel Rabinovich"
+  },
+  {
+    "id": 12,
+    "frase": "La pereza es la madre de todos los vicios, y como a toda madre... hay que respetarla.",
+    "obra": "Consejos del Gurú",
+    "show": "Todo por que rías (1999)",
+    "personaje": "Marcos Mundstock"
+  },
+  {
+    "id": 13,
+    "frase": "El alcohol mata lentamente... No importa, no tengo prisa.",
+    "obra": "Frases célebres de Mastropiero",
+    "show": "Viejos fracasos (1976)",
+    "personaje": "Daniel Rabinovich"
+  },
+  {
+    "id": 14,
+    "frase": "La música de Mastropiero es sumamente... cómo decirlo... audible.",
+    "obra": "Presentación de Johann Sebastian Mastropiero",
+    "show": "Mastropiero que nunca (1977)",
+    "personaje": "Marcos Mundstock"
+  },
+  {
+    "id": 15,
+    "frase": "A los que les gusta el pescado les gusta pescar. A los que les gusta la música les gusta... escuchar música. Bueno, hay gente para todo.",
+    "obra": "La Comisión",
+    "show": "Bromato de armonio (1996)",
+    "personaje": "Marcos Mundstock"
+  }
+]

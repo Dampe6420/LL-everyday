@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="es" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Les Luthiers Today — Una frase de Les Luthiers para cada día</title>
+    <!-- Tailwind CSS CDN para desarrollo ágil -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter para metadatos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+      // Configuración de Tailwind para usar fuentes personalizadas
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              theater: {
+                dark: '#0a0a0a',
+                gold: '#d4af37',
+                goldHover: '#f3cf59',
+                cream: '#f5f5f5',
+                charcoal: '#1c1c22'
+              }
+            }
+          }
+        }
+      }
+    </script>
+    
+    <style>
+      /* Fondo negro súper profundo del diseño Bold Typography */
+      body {
+        background-color: #0a0a0a;
+        color: #f5f5f5;
+      }
+      
+      .font-serif-elegant {
+        font-family: 'Georgia', 'Times New Roman', serif;
+      }
+      
+      .text-balance {
+        text-wrap: balance;
+      }
+      
+      .bmc-button:hover {
+        background-color: rgba(217, 119, 6, 0.1);
+        border-color: #d97706;
+        color: #f3cf59;
+      }
+      
+      /* Estilo de scrollbars invisible pero funcional */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(10, 10, 10, 0.5);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    </style>
+  </head>
+  <body class="h-full font-sans antialiased flex flex-col justify-between overflow-x-hidden selection:bg-amber-500/20 selection:text-amber-200">
+    
+    <!-- HEADER MINIMALISTA (Tema Bold Typography) -->
+    <header class="w-full max-w-7xl mx-auto px-6 py-8 flex justify-between items-center z-10 select-none">
+      <div class="flex items-center gap-2 opacity-40">
+        <div class="text-xs tracking-[0.3em] uppercase">Les Luthiers para todos los días</div>
+      </div>
+      
+      <!-- Selector de Calendario Minimalista (No permite fechas futuras) -->
+      <div class="flex items-center gap-2 border border-white/5 hover:border-white/20 rounded-full px-4 py-1.5 bg-white/[0.01] hover:bg-white/[0.03] cursor-pointer transition-all duration-300 relative group">
+        <!-- Icono de calendario -->
+        <svg class="h-3.5 w-3.5 text-white/40 group-hover:text-white/70 transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        
+        <!-- El input de tipo fecha transparente encima de todo el elemento, fácil de clickear -->
+        <input type="date" id="datepicker" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-20" />
+        
+        <span id="current-date" class="text-[10px] font-mono text-white/40 group-hover:text-white/80 uppercase tracking-widest transition-colors">
+          <!-- Se llena dinámicamente -->
+        </span>
+      </div>
+    </header>
+
+    <!-- ESCENARIO PRINCIPAL (CONTENIDO) -->
+    <main class="flex-grow flex flex-col items-center justify-center px-6 py-12 max-w-4xl mx-auto w-full relative z-10">
+      
+      <!-- Contenedor de la frase del día -->
+      <article id="phrase-container" class="w-full flex flex-col items-center text-center opacity-0 transition-all duration-1000 ease-out transform translate-y-4">
+        
+        <!-- Frase Principal (con estilo Bold Typography) -->
+        <h1 id="phrase-text" class="font-serif-elegant text-4xl md:text-5xl lg:text-6xl xl:text-7xl italic leading-[1.15] mb-12 text-balance text-[#f5f5f5] font-normal select-text">
+          <!-- Cargando... -->
+        </h1>
+        
+        <!-- Datos del archivo y procedencia de la frase con estilo minimalista Bold Typography -->
+        <footer class="flex flex-col items-center gap-2 opacity-60">
+          
+          <div class="text-[11px] md:text-xs tracking-[0.4em] uppercase font-light text-slate-300 text-center">
+            <span id="obra-text">—</span> • <span id="show-text">—</span>
+          </div>
+          
+          <!-- Separador fino -->
+          <div class="w-8 h-[1px] bg-white/20 my-2"></div>
+          
+          <div class="text-[11px] md:text-xs italic text-amber-200/60 tracking-wider">
+            Intérprete: <span id="personaje-text">—</span>
+          </div>
+
+        </footer>
+
+        <!-- Opciones de Compartir y Acciones Sutiles -->
+        <div class="mt-12 flex flex-wrap justify-center items-center gap-3 select-none">
+          
+          <!-- Copiar Frase -->
+          <button id="copy-btn" class="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/40 hover:text-white/80 border border-white/5 hover:border-white/20 px-4 py-2 rounded-full bg-white/[0.02] transition-all duration-300 group cursor-pointer" title="Copiar frase al portapapeles">
+            <svg class="h-3 w-3 group-hover:scale-110 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1M8 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M8 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m0 0h2a2 2 0 0 1 2 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+            <span>Copiar</span>
+          </button>
+
+          <!-- Compartir en X -->
+          <a id="share-x-btn" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/40 hover:text-white/80 border border-white/5 hover:border-white/20 px-4 py-2 rounded-full bg-white/[0.02] transition-all duration-300 group cursor-pointer" title="Compartir en X (Twitter)">
+            <svg class="h-3 w-3 group-hover:scale-110 transition-transform duration-200 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            <span>X (Twitter)</span>
+          </a>
+
+          <!-- Compartir en WhatsApp -->
+          <a id="share-wa-btn" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/40 hover:text-white/80 border border-white/5 hover:border-white/20 px-4 py-2 rounded-full bg-white/[0.02] transition-all duration-300 group cursor-pointer" title="Compartir en WhatsApp">
+            <svg class="h-3 w-3 group-hover:scale-110 transition-transform duration-200 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.472 14.382c-.022-.015-.022-.015-.434-.252-.105-.06-.405-.24-.495-.285-.09-.045-.166-.06-.24-.06-.113 0-.173.015-.248.113-.014.015-.014.015-.36 0-.3-.345-.368-.45-.42-.518-.045-.06-.06-.105-.03-.18.03-.075.135-.15.195-.225.045-.06.075-.12.09-.18.015-.06 0-.105-.015-.15-.015-.045-.12-.285-.165-.375-.04-.12-.09-.105-.135-.105h-.12c-.045 0-.105.015-.165.075-.06.06-.24.24-.24.585s.24.675.27.72c.03.045.465.735 1.14 1.02.165.075.3.12.39.15.165.06.315.045.435.03.135-.015.405-.165.465-.33.06-.165.06-.315.045-.345-.015-.03-.06-.045-.09-.075zM12 2C6.48 2 2 6.48 2 12c0 2.17.7 4.19 1.88 5.83L2.5 22l4.33-1.32C8.38 21.49 10.12 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1.41 15.34c-.3.09-.61.15-.92.17-.42.03-.84.03-1.26.01a5.613 5.613 0 0 1-2.91-1.12l-.24-.15-2.03.62.62-1.95-.16-.25a5.553 5.553 0 0 1-.9-3c0-3.1 2.52-5.62 5.62-5.62 3.1 0 5.62 2.52 5.62 5.62-.01 1.51-.62 2.92-1.7 3.97l-.21.21-.04.47z"/>
+            </svg>
+            <span>WhatsApp</span>
+          </a>
+
+        </div>
+
+      </article>
+
+    </main>
+
+    <!-- FOOTER DISCRETO (Tema Bold Typography) -->
+    <footer class="w-full max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-white/5 z-10 text-center md:text-left">
+      
+      <!-- Información del sitio -->
+      <div class="space-y-1 select-none">
+        <div class="text-[10px] uppercase tracking-widest text-white/20">
+          Dichos y Hechos de Les Luthiers
+        </div>
+        <p class="text-[9px] font-mono text-white/15">
+          Un homenaje humorístico sin fines de lucro al genial grupo Les Luthiers.
+        </p>
+      </div>
+
+      <!-- Botón de Buy Me a Coffee personalizado de Bold Typography -->
+      <div>
+        <a id="coffee-link" href="https://www.buymeacoffee.com" target="_blank" rel="noopener noreferrer" 
+           class="bmc-button px-6 py-3 border border-white/10 rounded-full text-[11px] uppercase tracking-widest text-white/60 transition-all duration-300 flex items-center gap-3 cursor-pointer">
+          <span class="text-amber-500">☕</span>
+          <span>Invítale un café al archivista</span>
+        </a>
+      </div>
+
+    </footer>
+
+    <!-- TOAST NOTIFICACIÓN -->
+    <div id="toast-notification" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-zinc-900 border border-white/10 text-[#f5f5f5] text-[10px] font-mono tracking-widest uppercase rounded-full shadow-2xl opacity-0 translate-y-4 pointer-events-none transition-all duration-300 z-50">
+      Copiado al portapapeles
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- ARQUITECTURA LIMPIA Y LÓGICA DE NEGOCIO -->
+    <!-- ========================================== -->
+    <script type="module">
+      
+      // ==========================================
+      // 1. CAPA DE DOMINIO (Domain Layer)
+      // ==========================================
+      
+      /**
+       * DayOfYearCalculator - Servicio de Dominio Puro
+       * Calcula el índice del día ordinal del año (1 a 366).
+       * No tiene dependencias de librerías ni de infraestructura del DOM.
+       */
+      class DayOfYearCalculator {
+        /**
+         * @param {Date} date - Objeto de fecha local
+         * @returns {number} - Día del año (1-366)
+         */
+        static calculate(date) {
+          const year = date.getFullYear();
+          const startOfYear = new Date(year, 0, 1);
+          // Calcula la diferencia en milisegundos
+          const diffInMs = date.getTime() - startOfYear.getTime();
+          // Convierte a días y redondea hacia abajo, sumando 1 para que el rango sea 1-366
+          const day = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
+          return day;
+        }
+      }
+
+      // ==========================================
+      // 2. CAPA DE APLICACIÓN (Application/Use Cases Layer)
+      // ==========================================
+
+      /**
+       * GetDailyPhraseUseCase
+       * Caso de uso encargado de orquestar la obtención de la frase del día
+       * garantizando consistencia absoluta (un cambio exacto de 24 horas idéntico para todos los usuarios).
+       */
+      class GetDailyPhraseUseCase {
+        /**
+         * @param {PhraseRepository} phraseRepository - Instancia del puerto del repositorio
+         */
+        constructor(phraseRepository) {
+          this.phraseRepository = phraseRepository;
+        }
+
+        /**
+         * Orquesta el proceso matemático y retorna la frase del día.
+         * @param {Date} date - La fecha actual de evaluación
+         * @returns {object} - Objeto Phrase
+         */
+        execute(date) {
+          const phrases = this.phraseRepository.getAll();
+          if (!phrases || phrases.length === 0) {
+            throw new Error("El repositorio de frases está vacío.");
+          }
+
+          const dayOfYear = DayOfYearCalculator.calculate(date);
+          
+          // OPERADOR RESIDUO (%): Garantiza la rotación idéntica y circular basada en el número de frases.
+          const phraseIndex = dayOfYear % phrases.length;
+          
+          return phrases[phraseIndex];
+        }
+      }
+
+      // ==========================================
+      // 3. CAPA DE ADAPTADORES E INFRAESTRUCTURA (Infrastructure & Adapters Layer)
+      // ==========================================
+
+      /**
+       * InMemoryPhraseRepository
+       * Adaptador del repositorio de datos en memoria que expone la lista de frases de Les Luthiers.
+       */
+      class InMemoryPhraseRepository {
+        /**
+         * @param {Array<object>} phrasesData - Array de objetos JSON con las frases
+         */
+        constructor(phrasesData) {
+          this.phrases = phrasesData;
+        }
+
+        /**
+         * Obtiene la colección completa de frases.
+         * @returns {Array<object>}
+         */
+        getAll() {
+          return this.phrases;
+        }
+      }
+
+      /**
+       * DomPresenter
+       * Adaptador de Presentación encargado de acoplarse y manipular el DOM de manera estructurada.
+       */
+      class DomPresenter {
+        /**
+         * @param {object} elements - Referencias a elementos del DOM
+         */
+        constructor(elements) {
+          this.elements = elements;
+        }
+
+        /**
+         * Muestra los datos de la frase en pantalla.
+         * @param {object} phrase - Datos de la frase procesada
+         */
+        render(phrase) {
+          this.elements.phraseText.innerHTML = `"${phrase.frase}"`;
+          this.elements.obraText.textContent = phrase.obra;
+          this.elements.showText.textContent = phrase.show;
+          this.elements.personajeText.textContent = phrase.personaje;
+          
+          // Remueve la opacidad para un efecto de fundido teatral suave (fade-in)
+          setTimeout(() => {
+            this.elements.phraseContainer.classList.remove('opacity-0', 'translate-y-4');
+            this.elements.phraseContainer.classList.add('opacity-100', 'translate-y-0');
+          }, 150);
+        }
+
+        /**
+         * Muestra la fecha formateada en la cabecera.
+         * @param {Date} date
+         */
+        renderDate(date) {
+          const options = { year: 'numeric', month: 'long', day: 'numeric' };
+          const formattedDate = date.toLocaleDateString('es-ES', options);
+          this.elements.currentDateText.textContent = formattedDate;
+        }
+
+        /**
+         * Dispara un Toast informativo en pantalla.
+         */
+        showToast() {
+          const toast = this.elements.toast;
+          toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+          toast.classList.add('opacity-100', 'translate-y-0');
+          
+          setTimeout(() => {
+            toast.classList.remove('opacity-100', 'translate-y-0');
+            toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+          }, 2000);
+        }
+      }
+
+
+      // ==========================================
+      // 4. COMPOSICIÓN Y ARRANQUE (Composition Root)
+      // ==========================================
+
+      // Inicialización una vez cargado el DOM y descargado el archivo JSON de frases
+      document.addEventListener('DOMContentLoaded', () => {
+        
+        // 1. Obtención de referencias del DOM
+        const elements = {
+          phraseContainer: document.getElementById('phrase-container'),
+          phraseText: document.getElementById('phrase-text'),
+          obraText: document.getElementById('obra-text'),
+          showText: document.getElementById('show-text'),
+          personajeText: document.getElementById('personaje-text'),
+          currentDateText: document.getElementById('current-date'),
+          datepicker: document.getElementById('datepicker'),
+          toast: document.getElementById('toast-notification'),
+          copyBtn: document.getElementById('copy-btn'),
+          shareXBtn: document.getElementById('share-x-btn'),
+          shareWaBtn: document.getElementById('share-wa-btn')
+        };
+
+        // Mostrar un estado de carga inicial sutil
+        elements.phraseText.textContent = "Cargando archivo de frases...";
+
+        // 2. Cargar base de datos de frases asíncronamente
+        fetch('frases.json')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error("No se pudo cargar la base de datos de frases.");
+            }
+            return response.json();
+          })
+          .then(phrasesData => {
+            // Composición de dependencias con datos reales
+            const phraseRepository = new InMemoryPhraseRepository(phrasesData);
+            const getDailyPhraseUseCase = new GetDailyPhraseUseCase(phraseRepository);
+            const presenter = new DomPresenter(elements);
+
+            // 3. Configurar límites de fecha (sin permitir fechas futuras)
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const todayStr = `${yyyy}-${mm}-${dd}`;
+            elements.datepicker.setAttribute('max', todayStr);
+            elements.datepicker.value = todayStr;
+
+            // Estado de la fecha seleccionada
+            let activeDate = today;
+            let activePhrase = getDailyPhraseUseCase.execute(activeDate);
+
+            // 4. Renderizar iniciales
+            presenter.renderDate(activeDate);
+            presenter.render(activePhrase);
+            updateShareLinks(activePhrase);
+
+            // Función para actualizar los enlaces de compartición en redes sociales
+            function updateShareLinks(phrase) {
+              const textToShare = `“${phrase.frase}” — Obra: ${phrase.obra} (${phrase.show}) | Les Luthiers`;
+              
+              // Twitter/X Url
+              const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(textToShare)}`;
+              elements.shareXBtn.setAttribute('href', xUrl);
+
+              // WhatsApp Url
+              const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(textToShare)}`;
+              elements.shareWaBtn.setAttribute('href', waUrl);
+            }
+
+            // Función para cambiar de fecha y frase con animación elegante de transición
+            function changeDate(newDate) {
+              activeDate = newDate;
+              
+              // Mantener el valor del input del calendario sincronizado
+              const y = newDate.getFullYear();
+              const m = String(newDate.getMonth() + 1).padStart(2, '0');
+              const d = String(newDate.getDate()).padStart(2, '0');
+              elements.datepicker.value = `${y}-${m}-${d}`;
+              
+              // Desvanecer (fade-out)
+              elements.phraseContainer.classList.remove('opacity-100', 'translate-y-0');
+              elements.phraseContainer.classList.add('opacity-0', 'translate-y-4');
+
+              setTimeout(() => {
+                activePhrase = getDailyPhraseUseCase.execute(activeDate);
+                
+                // Renderizar nuevos datos
+                presenter.renderDate(activeDate);
+                presenter.render(activePhrase);
+                updateShareLinks(activePhrase);
+              }, 300);
+            }
+
+            // 5. Manejador de eventos para el selector de fecha (Calendario)
+            elements.datepicker.addEventListener('change', (e) => {
+              if (!e.target.value) return;
+              
+              // Crear fecha de forma segura evitando problemas de timezone local al parsear YYYY-MM-DD
+              const [year, month, day] = e.target.value.split('-').map(Number);
+              const selectedDate = new Date(year, month - 1, day);
+              
+              // Prevenir fechas futuras de forma segura
+              const nowMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+              if (selectedDate > nowMidnight) {
+                elements.datepicker.value = todayStr;
+                changeDate(today);
+                return;
+              }
+
+              changeDate(selectedDate);
+            });
+
+            // 6. Configurar manejador de eventos para Copiar Frase
+            elements.copyBtn.addEventListener('click', async () => {
+              const textToCopy = `“${activePhrase.frase}”\n— Obra: ${activePhrase.obra} (${activePhrase.show}) | Intérprete: ${activePhrase.personaje}`;
+              
+              try {
+                await navigator.clipboard.writeText(textToCopy);
+                presenter.showToast();
+              } catch (err) {
+                // Fallback para navegadores antiguos o restricciones de iframe
+                const textarea = document.createElement('textarea');
+                textarea.value = textToCopy;
+                textarea.style.position = 'fixed'; // Evita el scroll
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                  document.execCommand('copy');
+                  presenter.showToast();
+                } catch (fallbackErr) {
+                  console.error('Error al copiar al portapapeles:', fallbackErr);
+                }
+                document.body.removeChild(textarea);
+              }
+            });
+          })
+          .catch(err => {
+            console.error("Error al iniciar la aplicación:", err);
+            elements.phraseText.textContent = "Error al cargar el archivo de frases de Les Luthiers.";
+          });
+
+      });
+
+    </script>
+  </body>
+</html>
+
+

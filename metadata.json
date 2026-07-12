@@ -1,0 +1,6 @@
+{
+  "name": "Mastropiero Today",
+  "description": "Landing page minimalista que muestra una frase célebre diaria del grupo de humor Les Luthiers, calculada de forma determinista para cada día del año.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
